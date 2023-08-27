@@ -128,7 +128,7 @@ async def main(num_workers, num_reqs):
 
 
 try:
-    # launch 20 concurrent workers that each make 20 requests
+    # launch 20 concurrent workers that each make 20 requests before restarting connection
     # this would be the high end of normal individual youtube traffic
     asyncio.run(main(num_workers = 20, num_reqs = 20))
 except (KeyboardInterrupt, Exception) as e:
