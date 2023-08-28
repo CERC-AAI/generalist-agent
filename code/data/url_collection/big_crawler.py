@@ -21,7 +21,7 @@ print_lock = asyncio.Lock()
 # data files
 video_file = open('videos.txt', 'a')
 channel_file = open('channels.txt', 'a')
-playlist_file = open('playlists.jsonl', 'a')
+playlist_file = open('playlists.jsonl', 'a', encoding = 'utf-8')
 
 # channels seen so far (continue from previous runs)
 channels = set()
