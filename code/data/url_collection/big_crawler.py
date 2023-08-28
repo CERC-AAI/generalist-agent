@@ -96,19 +96,20 @@ async def worker(unexplored_videos, num_reqs, channels_set = channels):
             
 
 async def main(num_workers, num_reqs):
-    # read last num_workers * num_req in to start the crawler back up
+    # read last num_workers * 1000 in to start the crawler back up
     initial_videos = os.popen(
-        'tail -n ' + str(num_workers * num_reqs) + ' videos.txt'
+        'tail -n ' + str(num_workers * 1000) + ' videos.txt'
     ).read().split('\n')[:-1]
 
     # if videos.txt doesn't have enough videos (cold start), fill it with some recommendations
-    if len(initial_videos) < num_workers * num_reqs:
+    if len(initial_videos) == 0:
         assert len(channels) == 0, \
             'channels.txt should be empty for cold start, delete channels.txt and try again'
 
         # start with an old and popular video
         initial_videos = ['dQw4w9WgXcQ']
         async with ClientSession(base_url = BASE) as session:
+            # collect num_workers * num_reqs videos (just a heuristic)
             while len(initial_videos) < num_workers * num_reqs:
                 video_id = initial_videos.pop()
                 await get_recommendations(video_id, session, initial_videos)
